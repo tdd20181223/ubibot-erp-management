@@ -1,7 +1,12 @@
+import { PageContainer } from '@ant-design/pro-components';
 import React from 'react';
 
-const MyPage: React.FC = () => {
-  return <div>这是我的新页面</div>;
+const AccountCenter: React.FC = () => {
+  return (
+    <PageContainer>
+      <div>个人中心页面</div>
+    </PageContainer>
+  );
 };
 
-export default MyPage;
+export default AccountCenter;
