@@ -63,6 +63,7 @@ const AccountCenter: React.FC = () => {
     { value: 'tom', label: '销售主管' },
   ];
 
+  // 员工列表
   const { RangePicker } = DatePicker;
 
   const valueEnum = {
@@ -209,61 +210,61 @@ const AccountCenter: React.FC = () => {
         </ProCard>
         <ProCard title="员工列表" headerBordered>
           {/* <div style={{ height: 360 }}>右侧内容</div> */}
-          <ProTable<TableListItem>
-            columns={columns}
-            rowSelection={{
-              // 自定义选择项参考: https://ant.design/components/table-cn/#components-table-demo-row-selection-custom
-              // 注释该行则默认不显示下拉选项
-              selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT],
-              defaultSelectedRowKeys: [1],
-            }}
-            tableAlertRender={({
-              selectedRowKeys,
-              selectedRows,
-              onCleanSelected,
-            }) => {
-              console.log(selectedRowKeys, selectedRows);
-              return (
-                <Space size={24}>
-                  <span>
-                    已选 {selectedRowKeys.length} 项
-                    <a
-                      style={{ marginInlineStart: 8 }}
-                      onClick={onCleanSelected}
-                    >
-                      取消选择
-                    </a>
-                  </span>
-                  <span>{`容器数量: ${selectedRows.reduce(
-                    (pre, item) => pre + item.containers,
-                    0,
-                  )} 个`}</span>
-                  <span>{`调用量: ${selectedRows.reduce(
-                    (pre, item) => pre + item.callNumber,
-                    0,
-                  )} 次`}</span>
-                </Space>
-              );
-            }}
-            tableAlertOptionRender={() => {
-              return (
-                <Space size={16}>
-                  <a>批量删除</a>
-                  <a>导出数据</a>
-                </Space>
-              );
-            }}
-            dataSource={tableListDataSource}
-            scroll={{ x: '100%' }}
-            options={false}
-            search={false}
-            pagination={{
-              pageSize: 5,
-            }}
-            rowKey="key"
-            headerTitle="批量操作"
-            toolBarRender={() => [<Button key="show">查看日志</Button>]}
-          />
+          <div className="employee-list">
+            <ProTable<TableListItem>
+              columns={columns}
+              rowSelection={{
+                // 自定义选择项参考: https://ant.design/components/table-cn/#components-table-demo-row-selection-custom
+                // 注释该行则默认不显示下拉选项
+                selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT],
+                defaultSelectedRowKeys: [1],
+              }}
+              tableAlertRender={({
+                selectedRowKeys,
+                selectedRows,
+                onCleanSelected,
+              }) => {
+                console.log(selectedRowKeys, selectedRows);
+                return (
+                  <Space size={24}>
+                    <span>
+                      已选 {selectedRowKeys.length} 项
+                      <a
+                        style={{ marginInlineStart: 8 }}
+                        onClick={onCleanSelected}
+                      >
+                        取消选择
+                      </a>
+                    </span>
+                    <span>{`容器数量: ${selectedRows.reduce(
+                      (pre, item) => pre + item.containers,
+                      0,
+                    )} 个`}</span>
+                    <span>{`调用量: ${selectedRows.reduce(
+                      (pre, item) => pre + item.callNumber,
+                      0,
+                    )} 次`}</span>
+                  </Space>
+                );
+              }}
+              tableAlertOptionRender={() => {
+                return (
+                  <Space size={16}>
+                    <a>批量删除</a>
+                    <a>导出数据</a>
+                  </Space>
+                );
+              }}
+              dataSource={tableListDataSource}
+              scroll={{ x: 1200 }}
+              options={false}
+              search={false}
+              pagination={{
+                pageSize: 5,
+              }}
+              rowKey="key"
+            />
+          </div>
         </ProCard>
       </ProCard>
     </PageContainer>
