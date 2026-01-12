@@ -1,22 +1,28 @@
-import { PageContainer } from '@ant-design/pro-components';
-import { Card, theme } from 'antd';
+import { PageContainer, ProCard } from '@ant-design/pro-components';
+import { Input } from 'antd';
 import React from 'react';
 
 const AccountCenter: React.FC = () => {
+  const { Search } = Input;
+
   return (
     <PageContainer
       header={{
-        title: '页面标题',
+        title: false,
         breadcrumb: {},
       }}
     >
-      <Card
-        style={{
-          borderRadius: 8,
-        }}
-      >
-        <div className="background-white">个人中心页面</div>
-      </Card>
+      <ProCard split="vertical">
+        <ProCard title="公司组织架构" colSpan="25%" headerBordered>
+          <Search
+            placeholder="input search text"
+            onSearch={(value) => console.log(value)}
+          />
+        </ProCard>
+        <ProCard title="员工列表" headerBordered>
+          <div style={{ height: 360 }}>右侧内容</div>
+        </ProCard>
+      </ProCard>
     </PageContainer>
   );
 };
