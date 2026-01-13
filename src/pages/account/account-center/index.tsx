@@ -1,8 +1,9 @@
 import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { Button, Input, Select, Table, Tree } from 'antd';
-import React from 'react';
-import './acount-center.less';
 import type { ColumnType } from 'antd/es/table';
+import React, { useState } from 'react';
+import './acount-center.less';
+import AssignRoles from './components/AssignRoles';
 
 // 定义数据类型
 interface Employee {
@@ -15,9 +16,14 @@ interface Employee {
   roleGroup: string;
   employeeID: string;
 }
+interface Auto {
+  [key: string]: any;
+}
 
 const AccountCenter: React.FC = () => {
   const { Search } = Input;
+  const [roleVisible, setRoleVisible] = useState(false); // 分配角色
+  const [employeeJson, setEemployeeJson] = useState<Auto>({});
   // 组织架构数据
   const treeData = [
     {
@@ -104,14 +110,13 @@ const AccountCenter: React.FC = () => {
       width: 150,
       key: 'action',
       fixed: 'right',
-      render: () => (
+      render: (text, record: Employee) => (
         <span>
-          <a>分配角色</a>
+          <Button onClick={() => handleAssignRole(record)}>分配角色</Button>
         </span>
       ),
     },
   ];
-  // department  mainDepartment  position  role  roleGroup employeeID
   const data = [
     {
       key: '1',
@@ -125,7 +130,7 @@ const AccountCenter: React.FC = () => {
     },
   ];
 
-  // rowSelection object indicates the need for row selection
+  // 选择框
   const rowSelection = {
     onChange: (selectedRowKeys: any, selectedRows: any) => {
       console.log(
@@ -138,6 +143,16 @@ const AccountCenter: React.FC = () => {
       disabled: record.name === 'Disabled User', // Column configuration not to be checked
       name: record.name,
     }),
+  };
+
+  // 分配角色按钮
+  const handleAssignRole = (employee: Employee) => {
+    setRoleVisible(true);
+    setEemployeeJson(employee);
+    console.log('要分配角色的员工:', employee);
+  };
+  const changeRoleVisible = (result: boolean) => {
+    setRoleVisible(result);
   };
 
   return (
@@ -187,6 +202,13 @@ const AccountCenter: React.FC = () => {
           </div>
         </ProCard>
       </ProCard>
+      {/* 分配角色 */}
+      {roleVisible && (
+        <AssignRoles
+          visible={roleVisible}
+          changeVisible={changeRoleVisible}
+        ></AssignRoles>
+      )}
     </PageContainer>
   );
 };
