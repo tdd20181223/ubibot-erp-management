@@ -1,24 +1,20 @@
-import {
-  PageContainer,
-  ProCard,
-  type ProColumns,
-  ProTable,
-} from '@ant-design/pro-components';
-import { Button, DatePicker, Input, Select, Space, Table, Tree } from 'antd';
+import { PageContainer, ProCard } from '@ant-design/pro-components';
+import { Button, Input, Select, Table, Tree } from 'antd';
 import React from 'react';
 import './acount-center.less';
+import type { ColumnType } from 'antd/es/table';
 
-type TableListItem = {
-  key: number;
+// 定义数据类型
+interface Employee {
+  key: string;
   name: string;
-  progress: number;
-  containers: number;
-  callNumber: number;
-  creator: string;
-  status: string;
-  createdAt: number;
-  memo: string;
-};
+  department: string;
+  mainDepartment: string;
+  position: string;
+  role: string;
+  roleGroup: string;
+  employeeID: string;
+}
 
 const AccountCenter: React.FC = () => {
   const { Search } = Input;
@@ -64,114 +60,85 @@ const AccountCenter: React.FC = () => {
   ];
 
   // 员工列表
-  const { RangePicker } = DatePicker;
-
-  const valueEnum = {
-    0: 'close',
-    1: 'running',
-    2: 'online',
-    3: 'error',
-  };
-
-  const ProcessMap = {
-    close: 'normal',
-    running: 'active',
-    online: 'success',
-    error: 'exception',
-  } as const;
-
-  const tableListDataSource: TableListItem[] = [];
-
-  const creators = ['付小小', '曲丽丽', '林东东', '陈帅帅', '兼某某'];
-
-  for (let i = 0; i < 50; i += 1) {
-    tableListDataSource.push({
-      key: i,
-      name: 'AppName-' + i,
-      containers: Math.floor(Math.random() * 20),
-      callNumber: Math.floor(Math.random() * 2000),
-      progress: Math.ceil(Math.random() * 100) + 1,
-      creator: creators[Math.floor(Math.random() * creators.length)],
-      status: valueEnum[((Math.floor(Math.random() * 10) % 4) + '') as '0'],
-      createdAt: Date.now() - Math.floor(Math.random() * 100000),
-      memo:
-        i % 2 === 1
-          ? '很长很长很长很长很长很长很长的文字要展示但是要留下尾巴'
-          : '简短备注文案',
-    });
-  }
-
-  const columns: ProColumns<TableListItem>[] = [
+  const columns: ColumnType<Employee>[] = [
     {
       title: '姓名',
-      width: 120,
       dataIndex: 'name',
+      width: 150,
+      key: 'name',
       fixed: 'left',
-      render: (_: any) => <a>{_}</a>,
+      render: (text: any) => <a>{text}</a>,
     },
     {
-      title: '所属部门',
-      width: 120,
-      dataIndex: 'containers',
-      align: 'right',
-      search: false,
-      sorter: (a, b) => a.containers - b.containers,
+      title: '所属部门', //
+      dataIndex: 'department',
+      key: 'department',
     },
     {
       title: '主部门',
-      width: 120,
-      align: 'right',
-      dataIndex: 'callNumber',
+      dataIndex: 'mainDepartment',
+      key: 'mainDepartment',
     },
     {
       title: '职位',
-      dataIndex: 'progress',
-      valueType: (item: any) => ({
-        type: 'progress',
-        status: ProcessMap[item.status as 'close'],
-      }),
+      dataIndex: 'position',
+      key: 'position',
     },
     {
       title: '角色',
-      width: 120,
-      dataIndex: 'creator',
-      valueType: 'select',
-      valueEnum: {
-        all: { text: '全部' },
-        付小小: { text: '付小小' },
-        曲丽丽: { text: '曲丽丽' },
-        林东东: { text: '林东东' },
-        陈帅帅: { text: '陈帅帅' },
-        兼某某: { text: '兼某某' },
-      },
+      dataIndex: 'role',
+      key: 'role',
     },
     {
-      title: '角色权限',
-      width: 140,
-      key: 'since',
-      dataIndex: 'createdAt',
-      valueType: 'date',
-      sorter: (a, b) => a.createdAt - b.createdAt,
-      renderFormItem: () => {
-        return <RangePicker />;
-      },
+      title: '角色权限组',
+      dataIndex: 'roleGroup',
+      key: 'roleGroup',
     },
     {
       title: '员工编号',
-      dataIndex: 'memo',
-      ellipsis: true,
-      copyable: true,
-      search: false,
+      dataIndex: 'employeeID',
+      key: 'employeeID',
     },
     {
       title: '操作',
-      width: 80,
-      key: 'option',
-      valueType: 'option',
+      width: 150,
+      key: 'action',
       fixed: 'right',
-      render: () => [<a key="link">分配角色</a>],
+      render: () => (
+        <span>
+          <a>分配角色</a>
+        </span>
+      ),
     },
   ];
+  // department  mainDepartment  position  role  roleGroup employeeID
+  const data = [
+    {
+      key: '1',
+      name: 'John Brown',
+      department: '大连云动力科技有限公司,研发部',
+      mainDepartment: '研发部',
+      position: '软件工程师',
+      role: '超级管理员',
+      roleGroup: '--',
+      employeeID: '--',
+    },
+  ];
+
+  // rowSelection object indicates the need for row selection
+  const rowSelection = {
+    onChange: (selectedRowKeys: any, selectedRows: any) => {
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        'selectedRows: ',
+        selectedRows,
+      );
+    },
+    getCheckboxProps: (record: { name: string }) => ({
+      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
 
   return (
     <PageContainer
@@ -209,60 +176,13 @@ const AccountCenter: React.FC = () => {
           </div>
         </ProCard>
         <ProCard title="员工列表" headerBordered>
-          {/* <div style={{ height: 360 }}>右侧内容</div> */}
           <div className="employee-list">
-            <ProTable<TableListItem>
+            <Table
+              rowSelection={rowSelection}
               columns={columns}
-              rowSelection={{
-                // 自定义选择项参考: https://ant.design/components/table-cn/#components-table-demo-row-selection-custom
-                // 注释该行则默认不显示下拉选项
-                selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT],
-                defaultSelectedRowKeys: [1],
-              }}
-              tableAlertRender={({
-                selectedRowKeys,
-                selectedRows,
-                onCleanSelected,
-              }) => {
-                console.log(selectedRowKeys, selectedRows);
-                return (
-                  <Space size={24}>
-                    <span>
-                      已选 {selectedRowKeys.length} 项
-                      <a
-                        style={{ marginInlineStart: 8 }}
-                        onClick={onCleanSelected}
-                      >
-                        取消选择
-                      </a>
-                    </span>
-                    <span>{`容器数量: ${selectedRows.reduce(
-                      (pre, item) => pre + item.containers,
-                      0,
-                    )} 个`}</span>
-                    <span>{`调用量: ${selectedRows.reduce(
-                      (pre, item) => pre + item.callNumber,
-                      0,
-                    )} 次`}</span>
-                  </Space>
-                );
-              }}
-              tableAlertOptionRender={() => {
-                return (
-                  <Space size={16}>
-                    <a>批量删除</a>
-                    <a>导出数据</a>
-                  </Space>
-                );
-              }}
-              dataSource={tableListDataSource}
-              scroll={{ x: 1200 }}
-              options={false}
-              search={false}
-              pagination={{
-                pageSize: 5,
-              }}
-              rowKey="key"
+              dataSource={data}
+              tableLayout="fixed"
+              scroll={{ x: 1100, y: 300 }}
             />
           </div>
         </ProCard>
