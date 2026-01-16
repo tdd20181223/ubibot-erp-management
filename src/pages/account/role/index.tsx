@@ -1,8 +1,9 @@
+import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { Button, Input, Select, Table, Tree } from 'antd';
 import type { ColumnType } from 'antd/es/table';
 import React, { useState } from 'react';
-import './acount-center.less';
+import './role.less';
 import AssignRoles from './components/AssignRoles';
 
 // 定义数据类型
@@ -163,31 +164,27 @@ const AccountCenter: React.FC = () => {
       }}
     >
       <div className="background-white center-top">
-        <Search
-          placeholder="请搜索员工"
-          onSearch={(value) => console.log(value)}
-          style={{ width: 200 }}
-        />
-        <Select
-          showSearch
-          placeholder="筛选角色"
-          className="center-role-select"
-          optionFilterProp="children" // 搜索时匹配 label 内容（若用 options 则默认按 label 搜）
-          filterOption={(input, option) =>
-            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-          }
-          options={options}
-        />
-        <Button>同步组织架构</Button>
+        <div className="role-title">角色权限</div>
       </div>
       <ProCard split="vertical">
-        <ProCard title="公司组织架构" colSpan="20%" headerBordered>
-          <Search
-            placeholder="搜索部门名称"
-            onSearch={(value) => console.log(value)}
-          />
+        <ProCard
+          title="角色列表"
+          colSpan="20%"
+          headerBordered
+          extra={<PlusOutlined className="role-content-list-icon" />}
+        >
+          <div>
+            <Search
+              placeholder="搜索角色名称"
+              onSearch={(value) => console.log(value)}
+            />
+          </div>
+
           <div className="padding-top-20">
-            <Tree treeData={treeData} defaultExpandAll blockNode />
+            <div>
+              <span>超级管理员</span>
+              <span>系统</span>
+            </div>
           </div>
         </ProCard>
         <ProCard title="员工列表" headerBordered>

@@ -34,9 +34,14 @@ export default [
     icon: 'user',
     routes: [
       {
-        name: 'center',
-        path: '/account/center',
-        component: './account/account-center',
+        name: 'organization',
+        path: '/account/organization',
+        component: './account/organization',
+      },
+      {
+        name: 'role',
+        path: '/account/role',
+        component: './account/role',
       },
     ],
   },
