@@ -1,6 +1,9 @@
 .background-white {
     background-color: #fff;
 }
+.blue {
+    color: #1890ff;
+}
 .padding-top-20 {
     padding-top: 20px;
 }
@@ -45,4 +48,97 @@ p {
     font-size: 18px;
     color: #666;
     margin-left: 3px;
+}
+.role-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 8px 0;
+    justify-content: space-between;
+}
+.role-list-span1 {
+    width: 80%;
+    color: #333;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+.role-list-span2 {
+    width: 20%;
+    color: #999;
+    text-align: right;
+}
+.role-details {
+    display: flex;
+}
+.role-details-left {
+    width: 250px;
+    border: 1px solid #dedede;
+    background-color: #f7f8fa;
+}
+.role-details-top {
+    height: 50px;
+    font-size: 16px;
+    padding: 10px 8px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #dedede;
+    box-sizing: border-box;
+}
+.role-details-list {
+    padding: 8px;
+    display: flex;
+    cursor: pointer;
+}
+.role-details-list-span1 {
+    width: 80%;
+    color: #666;
+}
+.role-details-list-span2 {
+    width: 20%;
+    text-align: right;
+}
+.role-details-list:hover .role-details-list-span1 {
+    color: #1890ff;
+}
+.role-details-list-active {
+    background-color: #dbedfc;
+}
+.role-details-list-active  .role-details-list-span1 {
+    color: #333;
+}
+.role-details-right {
+    flex-grow: 1;
+}
+.role-details-right-content, .role-details-right-top {
+    display: flex;
+    border-bottom: 1px solid #dedede;
+    border-right: 1px solid #dedede;
+}
+.role-details-right-content .left, .role-details-right-top .left {
+    width: 25%;
+    padding: 10px 8px;
+}
+.role-details-right-content .middle, .role-details-right-top .middle {
+    width: 45%;
+    padding: 10px 8px;
+}
+.role-details-right-content .right, .role-details-right-top .right {
+    width: 30%;
+    padding: 10px 8px;
+}
+.role-details-right-top .left, .role-details-right-top .middle, .role-details-right-top .right {
+    height: 50px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #dedede;
+    box-sizing: border-box;
+}
+
+.role-details-right-top .middle,
+.role-details-right-content .middle {
+    border-left: 1px solid #dedede;
+    border-right: 1px solid #dedede;
+}
+.role-details-right-content {
+    border-bottom: 1px solid #dedede;
 }

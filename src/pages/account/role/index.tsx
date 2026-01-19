@@ -1,7 +1,6 @@
-import { PlusOutlined } from '@ant-design/icons';
+import { CheckOutlined, PlusOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
-import { Button, Input, Select, Table, Tree } from 'antd';
-import type { ColumnType } from 'antd/es/table';
+import { Checkbox, type CheckboxChangeEvent, Input } from 'antd';
 import React, { useState } from 'react';
 import './role.less';
 import AssignRoles from './components/AssignRoles';
@@ -21,139 +20,43 @@ interface Auto {
   [key: string]: any;
 }
 
-const AccountCenter: React.FC = () => {
+const Role: React.FC = () => {
   const { Search } = Input;
   const [roleVisible, setRoleVisible] = useState(false); // 分配角色
-  const [employeeJson, setEemployeeJson] = useState<Auto>({});
-  // 组织架构数据
-  const treeData = [
-    {
-      key: '1',
-      title: '大连云动力科技有限公司',
-      children: [
-        {
-          key: '1-1',
-          title: '人事部',
-        },
-        {
-          key: '1-2',
-          title: '财务部',
-        },
-        {
-          key: '1-3',
-          title: '研发部',
-        },
-        {
-          key: '1-4',
-          title: '市场部',
-        },
-        {
-          key: '1-5',
-          title: '生产部',
-        },
-        {
-          key: '1-6',
-          title: '采购部',
-        },
-      ],
-    },
-  ];
+  const [indeterminate, setIndeterminate] = useState(false);
+  const plainOptions = ['Apple', 'Pear', 'Orange'];
+  const defaultCheckedList = ['Apple', 'Orange'];
+  const [checkAll, setCheckAll] = useState(false); // 全选
+  const [checkedList, setCheckedList] = useState(defaultCheckedList);
+  const options = [{ label: '客户管理(客户管理)', value: 'apple' }];
 
-  // 角色列表数据
-  const options = [
-    { value: 'jack', label: '超级管理员' },
-    { value: 'lucy', label: '老板' },
-    { value: 'tom', label: '销售主管' },
-  ];
-
-  // 员工列表
-  const columns: ColumnType<Employee>[] = [
-    {
-      title: '姓名',
-      dataIndex: 'name',
-      width: 150,
-      key: 'name',
-      fixed: 'left',
-      render: (text: any) => <a>{text}</a>,
-    },
-    {
-      title: '所属部门', //
-      dataIndex: 'department',
-      key: 'department',
-    },
-    {
-      title: '主部门',
-      dataIndex: 'mainDepartment',
-      key: 'mainDepartment',
-    },
-    {
-      title: '职位',
-      dataIndex: 'position',
-      key: 'position',
-    },
-    {
-      title: '角色',
-      dataIndex: 'role',
-      key: 'role',
-    },
-    {
-      title: '角色权限组',
-      dataIndex: 'roleGroup',
-      key: 'roleGroup',
-    },
-    {
-      title: '员工编号',
-      dataIndex: 'employeeID',
-      key: 'employeeID',
-    },
-    {
-      title: '操作',
-      width: 150,
-      key: 'action',
-      fixed: 'right',
-      render: (text, record: Employee) => (
-        <span>
-          <Button onClick={() => handleAssignRole(record)}>分配角色</Button>
-        </span>
-      ),
-    },
-  ];
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      department: '大连云动力科技有限公司,研发部',
-      mainDepartment: '研发部',
-      position: '软件工程师',
-      role: '超级管理员',
-      roleGroup: '--',
-      employeeID: '--',
-    },
-  ];
-
-  // 选择框
-  const rowSelection = {
-    onChange: (selectedRowKeys: any, selectedRows: any) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        'selectedRows: ',
-        selectedRows,
-      );
-    },
-    getCheckboxProps: (record: { name: string }) => ({
-      disabled: record.name === 'Disabled User', // Column configuration not to be checked
-      name: record.name,
-    }),
-  };
-
-  // 分配角色按钮
-  const handleAssignRole = (employee: Employee) => {
-    setRoleVisible(true);
-    setEemployeeJson(employee);
-    console.log('要分配角色的员工:', employee);
-  };
   const changeRoleVisible = (result: boolean) => {
     setRoleVisible(result);
+  };
+
+  // 表单页面
+  const onChangePageForm = (checkedValues: any) => {
+    setCheckedList(checkedValues);
+  };
+
+  // 表单权限
+  const onChangeRoleForm = (newCheckedList: string[]) => {
+    setCheckedList(newCheckedList);
+    const newCheckAll = newCheckedList.length === plainOptions.length;
+    const newIndeterminate =
+      !!newCheckedList.length && newCheckedList.length < plainOptions.length;
+
+    setCheckAll(newCheckAll);
+    setIndeterminate(newIndeterminate);
+  };
+
+  const onCheckAllChange = (e: CheckboxChangeEvent) => {
+    const checked = e.target.checked;
+    const newCheckedList = checked ? plainOptions : [];
+
+    setCheckedList(newCheckedList);
+    setCheckAll(checked);
+    setIndeterminate(false); // 全选或全不选时，indeterminate 一定是 false
   };
 
   return (
@@ -181,21 +84,75 @@ const AccountCenter: React.FC = () => {
           </div>
 
           <div className="padding-top-20">
-            <div>
-              <span>超级管理员</span>
-              <span>系统</span>
+            <div className="role-list">
+              <span className="role-list-span1">超级管理员</span>
+              <span className="role-list-span2">系统</span>
+            </div>
+            <div className="role-list">
+              <span className="role-list-span1">销售主管</span>
+              <span className="role-list-span2">系统</span>
+            </div>
+            <div className="role-list">
+              <span className="role-list-span1">生产员</span>
+              <span className="role-list-span2">系统</span>
             </div>
           </div>
         </ProCard>
-        <ProCard title="员工列表" headerBordered>
-          <div className="employee-list">
-            <Table
-              rowSelection={rowSelection}
-              columns={columns}
-              dataSource={data}
-              tableLayout="fixed"
-              scroll={{ x: 1100, y: 300 }}
-            />
+        <ProCard title="角色权限" headerBordered>
+          <div className="role-details">
+            <div className="role-details-left">
+              <div className="role-details-top">应用列表</div>
+              <div className="role-details-list">
+                <span className="role-details-list-span1">CRM</span>
+                <span className="role-details-list-span2">
+                  <CheckOutlined className="blue" />
+                </span>
+              </div>
+              <div className="role-details-list role-details-list-active">
+                <span className="role-details-list-span1">进销存</span>
+                <span className="role-details-list-span2">
+                  <CheckOutlined className="blue" />
+                </span>
+              </div>
+            </div>
+            <div className="role-details-right">
+              <div className="role-details-right-top">
+                <div className="left">表单</div>
+                <div className="middle">表单权限</div>
+                <div className="right">数据权限</div>
+              </div>
+              <div className="role-details-right-content">
+                <div className="left">
+                  <Checkbox.Group onChange={onChangePageForm}>
+                    {options.map((option) => {
+                      return (
+                        <div key={option.value} className="check-block-div">
+                          <Checkbox value={option.value}>
+                            {option.label}
+                          </Checkbox>
+                        </div>
+                      );
+                    })}
+                  </Checkbox.Group>
+                </div>
+                <div className="middle">
+                  <Checkbox
+                    indeterminate={indeterminate}
+                    onChange={onCheckAllChange}
+                    checked={checkAll}
+                  >
+                    Check all
+                  </Checkbox>
+                  <br />
+                  <Checkbox.Group
+                    options={plainOptions}
+                    value={checkedList}
+                    onChange={onChangeRoleForm} // 👈 直接传函数，不要包一层无参箭头函数
+                  />
+                </div>
+                <div className="right">数据权限</div>
+              </div>
+            </div>
           </div>
         </ProCard>
       </ProCard>
@@ -210,4 +167,4 @@ const AccountCenter: React.FC = () => {
   );
 };
 
-export default AccountCenter;
+export default Role;
