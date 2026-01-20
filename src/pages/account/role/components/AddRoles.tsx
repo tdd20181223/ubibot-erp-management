@@ -1,6 +1,6 @@
 import { Input, Modal } from 'antd';
 import React, { useState } from 'react';
-import '../role.less';
+import '../index.less';
 
 interface MyComponentProps {
   visible: boolean;

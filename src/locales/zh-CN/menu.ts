@@ -45,6 +45,7 @@ export default {
   'menu.account.settings': '个人设置',
   'menu.account.organization': '组织架构',
   'menu.account.role': '角色管理',
+  'menu.account.application': '应用中心',
   'menu.account.trigger': '触发报错',
   'menu.account.logout': '退出登录',
   'menu.editor': '图形编辑器',

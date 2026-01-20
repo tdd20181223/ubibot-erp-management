@@ -29,6 +29,12 @@ export default [
     component: './Welcome',
   },
   {
+    path: '/application-manage',
+    name: 'account.application',
+    icon: 'appstore',
+    component: './account/applicationManage',
+  },
+  {
     path: '/account',
     name: 'account',
     icon: 'user',

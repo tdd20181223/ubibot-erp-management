@@ -2,7 +2,7 @@ import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { Button, Input, Select, Table, Tree } from 'antd';
 import type { ColumnType } from 'antd/es/table';
 import React, { useState } from 'react';
-import './organization.less';
+import './index.less';
 import AssignRoles from './components/AssignRoles';
 
 // 定义数据类型
@@ -20,7 +20,7 @@ interface Auto {
   [key: string]: any;
 }
 
-const AccountCenter: React.FC = () => {
+const Organization: React.FC = () => {
   const { Search } = Input;
   const [roleVisible, setRoleVisible] = useState(false); // 分配角色
   const [employeeJson, setEmployeeJson] = useState<Auto>({});
@@ -214,4 +214,4 @@ const AccountCenter: React.FC = () => {
   );
 };
 
-export default AccountCenter;
+export default Organization;

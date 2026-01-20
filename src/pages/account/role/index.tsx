@@ -2,7 +2,7 @@ import { CheckOutlined, PlusOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { Checkbox, type CheckboxChangeEvent, Input, Radio } from 'antd';
 import React, { useState } from 'react';
-import './role.less';
+import './index.less';
 import AddRoles from './components/AddRoles';
 
 const Role: React.FC = () => {
@@ -71,7 +71,7 @@ const Role: React.FC = () => {
         breadcrumb: {},
       }}
     >
-      <div className="background-white center-top">
+      <div className="background-white center-left">
         <div className="role-title">角色权限</div>
       </div>
       <ProCard split="vertical">

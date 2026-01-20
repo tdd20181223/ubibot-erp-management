@@ -1,6 +1,6 @@
 import { Checkbox, Modal } from 'antd';
 import React, { useState } from 'react';
-import '../organization.less';
+import '../index.less';
 import { CloseCircleOutlined } from '@ant-design/icons';
 
 interface MyComponentProps {
