@@ -23,7 +23,7 @@ interface Auto {
 const AccountCenter: React.FC = () => {
   const { Search } = Input;
   const [roleVisible, setRoleVisible] = useState(false); // 分配角色
-  const [employeeJson, setEemployeeJson] = useState<Auto>({});
+  const [employeeJson, setEmployeeJson] = useState<Auto>({});
   // 组织架构数据
   const treeData = [
     {
@@ -110,7 +110,7 @@ const AccountCenter: React.FC = () => {
       width: 150,
       key: 'action',
       fixed: 'right',
-      render: (text, record: Employee) => (
+      render: (_text, record: Employee) => (
         <span>
           <Button onClick={() => handleAssignRole(record)}>分配角色</Button>
         </span>
@@ -148,7 +148,7 @@ const AccountCenter: React.FC = () => {
   // 分配角色按钮
   const handleAssignRole = (employee: Employee) => {
     setRoleVisible(true);
-    setEemployeeJson(employee);
+    setEmployeeJson(employee);
     console.log('要分配角色的员工:', employee);
   };
   const changeRoleVisible = (result: boolean) => {
@@ -207,6 +207,7 @@ const AccountCenter: React.FC = () => {
         <AssignRoles
           visible={roleVisible}
           changeVisible={changeRoleVisible}
+          employee={employeeJson}
         ></AssignRoles>
       )}
     </PageContainer>

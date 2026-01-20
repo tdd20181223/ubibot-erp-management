@@ -6,11 +6,13 @@ import { CloseCircleOutlined } from '@ant-design/icons';
 interface MyComponentProps {
   visible: boolean;
   changeVisible: (visible: boolean) => void;
+  employee: Object;
 }
 
 const AssignRoles: React.FC<MyComponentProps> = ({
   visible,
   changeVisible,
+  employee,
 }: any) => {
   const [checkedList, setCheckedList] = useState<string[]>(['apple']);
   const options = [
@@ -18,6 +20,8 @@ const AssignRoles: React.FC<MyComponentProps> = ({
     { label: '香蕉', value: 'banana' },
     { label: '橙子', value: 'orange' },
   ];
+
+  console.log(employee);
 
   const onChange = (checkedValues: any) => {
     console.log('checked = ', checkedValues);
@@ -31,53 +35,56 @@ const AssignRoles: React.FC<MyComponentProps> = ({
     changeVisible(false);
   };
   return (
-    <>
-      <Modal
-        title="分配角色 - 田丹丹"
-        styles={{
-          body: {
-            height: '400px',
-            maxHeight: '80vh',
-            overflow: 'auto', // 内容超出时滚动
-            padding: '24px', // 默认有内边距，可调整
-          },
-        }}
-        width={900}
-        open={visible}
-        onOk={() => {
-          handleOk();
-        }}
-        onCancel={() => {
-          handleCancel();
-        }}
-      >
-        <div>
-          <p className="role-title">已选择角色</p>
-          <div className="role-content">
-            <div className="role-content-lists">
-              <div className="role-content-list">
-                <span>采购主管</span>
-                <CloseCircleOutlined className="role-content-list-icon" />
-              </div>
+    <Modal
+      title="分配角色 - 田丹丹"
+      styles={{
+        body: {
+          height: '400px',
+          maxHeight: '80vh',
+          overflow: 'auto', // 内容超出时滚动
+          padding: '24px', // 默认有内边距，可调整
+        },
+      }}
+      width={900}
+      open={visible}
+      onOk={() => {
+        handleOk();
+      }}
+      onCancel={() => {
+        handleCancel();
+      }}
+    >
+      <div>
+        <p className="role-title">已选择角色</p>
+        <div className="role-content">
+          <div className="role-content-lists">
+            <div className="role-content-list">
+              <span>采购主管</span>
+              <CloseCircleOutlined className="role-content-list-icon" />
             </div>
           </div>
         </div>
-        <div>
-          <p className="role-title">可选角色</p>
-          <div className="role-content">
-            <Checkbox.Group onChange={onChange}>
-              {options.map((option) => {
-                return (
-                  <div key={option.value} className="check-block-div">
-                    <Checkbox value={option.value}>{option.label}</Checkbox>
-                  </div>
-                );
-              })}
-            </Checkbox.Group>
-          </div>
+      </div>
+      <div>
+        <p className="role-title">可选角色</p>
+        <div className="role-content">
+          <Checkbox.Group onChange={onChange}>
+            {options.map((option) => {
+              return (
+                <div key={option.value} className="check-block-div">
+                  <Checkbox value={option.value}>{option.label}</Checkbox>
+                </div>
+              );
+            })}
+          </Checkbox.Group>
         </div>
-      </Modal>
-    </>
+      </div>
+      <div>
+        {checkedList.map((item) => {
+          return <div key={item}>{item}</div>;
+        })}
+      </div>
+    </Modal>
   );
 };
 

@@ -1,35 +1,27 @@
 import { CheckOutlined, PlusOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
-import { Checkbox, type CheckboxChangeEvent, Input } from 'antd';
+import { Checkbox, type CheckboxChangeEvent, Input, Radio } from 'antd';
 import React, { useState } from 'react';
 import './role.less';
-import AssignRoles from './components/AssignRoles';
-
-// 定义数据类型
-interface Employee {
-  key: string;
-  name: string;
-  department: string;
-  mainDepartment: string;
-  position: string;
-  role: string;
-  roleGroup: string;
-  employeeID: string;
-}
-interface Auto {
-  [key: string]: any;
-}
+import AddRoles from './components/AddRoles';
 
 const Role: React.FC = () => {
   const { Search } = Input;
-  const [roleVisible, setRoleVisible] = useState(false); // 分配角色
+  const [roleVisible, setRoleVisible] = useState(false); // 添加角色
   const [indeterminate, setIndeterminate] = useState(false);
   const plainOptions = ['Apple', 'Pear', 'Orange'];
   const defaultCheckedList = ['Apple', 'Orange'];
   const [checkAll, setCheckAll] = useState(false); // 全选
   const [checkedList, setCheckedList] = useState(defaultCheckedList);
-  const options = [{ label: '客户管理(客户管理)', value: 'apple' }];
+  const [value, setValue] = useState(1); // 全选
+  const options = [
+    { label: '客户管理(客户管理)', value: 'customerManagement' },
+  ]; // 表单参数
 
+  const addRole = () => {
+    console.log(11111);
+    setRoleVisible(true);
+  };
   const changeRoleVisible = (result: boolean) => {
     setRoleVisible(result);
   };
@@ -59,6 +51,19 @@ const Role: React.FC = () => {
     setIndeterminate(false); // 全选或全不选时，indeterminate 一定是 false
   };
 
+  // 数据权限 单选按钮
+  const onChangeDataPermission = (e: any) => {
+    console.log('radio checked', e.target.value);
+    setValue(e.target.value);
+  };
+
+  const radioStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    paddingTop: '4px',
+    paddingBottom: '4px',
+  };
+
   return (
     <PageContainer
       header={{
@@ -74,7 +79,15 @@ const Role: React.FC = () => {
           title="角色列表"
           colSpan="20%"
           headerBordered
-          extra={<PlusOutlined className="role-content-list-icon" />}
+          extra={
+            <span
+              className="role-content-list-icon"
+              onClick={addRole}
+              style={{ cursor: 'pointer' }}
+            >
+              <PlusOutlined />
+            </span>
+          }
         >
           <div>
             <Search
@@ -136,32 +149,48 @@ const Role: React.FC = () => {
                   </Checkbox.Group>
                 </div>
                 <div className="middle">
-                  <Checkbox
-                    indeterminate={indeterminate}
-                    onChange={onCheckAllChange}
-                    checked={checkAll}
-                  >
-                    Check all
-                  </Checkbox>
-                  <br />
+                  <div className="check-all">
+                    <Checkbox
+                      indeterminate={indeterminate}
+                      onChange={onCheckAllChange}
+                      checked={checkAll}
+                    >
+                      Check all
+                    </Checkbox>
+                  </div>
                   <Checkbox.Group
                     options={plainOptions}
                     value={checkedList}
                     onChange={onChangeRoleForm} // 👈 直接传函数，不要包一层无参箭头函数
                   />
                 </div>
-                <div className="right">数据权限</div>
+                <div className="right">
+                  <Radio.Group onChange={onChangeDataPermission} value={value}>
+                    <Radio style={radioStyle} value={1}>
+                      本人
+                    </Radio>
+                    <Radio style={radioStyle} value={2}>
+                      本部门
+                    </Radio>
+                    <Radio style={radioStyle} value={3}>
+                      本部门和下属部门
+                    </Radio>
+                    <Radio style={radioStyle} value={4}>
+                      全公司
+                    </Radio>
+                  </Radio.Group>
+                </div>
               </div>
             </div>
           </div>
         </ProCard>
       </ProCard>
-      {/* 分配角色 */}
+      {/* 添加角色 */}
       {roleVisible && (
-        <AssignRoles
+        <AddRoles
           visible={roleVisible}
           changeVisible={changeRoleVisible}
-        ></AssignRoles>
+        ></AddRoles>
       )}
     </PageContainer>
   );
