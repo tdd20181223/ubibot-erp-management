@@ -4,16 +4,17 @@ import '../index.less';
 
 const FormTemplate: React.FC = () => {
   return (
-    <PageContainer
-      header={{
-        title: false,
-        breadcrumb: {},
-      }}
-    >
-      <div className="background-white center-left">
-        <div className="role-title">表单模板</div>
+    <div className="form-manage">
+      <div className="form-manage-nav">
+        <div className="form-manage-nav-item">客户管理</div>
+        <div className="form-manage-nav-item form-manage-nav-item-active">
+          客户管理
+        </div>
       </div>
-    </PageContainer>
+      <div className="background-white form-manage-content">
+        <div className="form-manage-title">表单模板</div>
+      </div>
+    </div>
   );
 };
 
