@@ -1,6 +1,5 @@
 import { PageContainer } from '@ant-design/pro-components';
 import type { TabsProps } from 'antd';
-import { Tabs } from 'antd';
 import React from 'react'; // , { useState }
 import './index.less';
 import {
@@ -10,28 +9,6 @@ import {
 } from '@ant-design/icons';
 
 const ApplicationManage: React.FC = () => {
-  const onChange = (key: string) => {
-    console.log(key);
-  };
-
-  const items: TabsProps['items'] = [
-    {
-      key: '1',
-      label: 'Tab 1',
-      children: 'Content of Tab Pane 11111',
-    },
-    {
-      key: '2',
-      label: 'Tab 2',
-      children: 'Content of Tab Pane 22222',
-    },
-    {
-      key: '3',
-      label: 'Tab 3',
-      children: 'Content of Tab Pane 33333',
-    },
-  ];
-
   return (
     <PageContainer
       header={{

@@ -32,7 +32,7 @@ export default [
     path: '/application-manage',
     name: 'account.application',
     icon: 'appstore',
-    component: './account/applicationManage',
+    component: './applicationManage',
   },
   {
     path: '/account',
@@ -48,6 +48,18 @@ export default [
         name: 'role',
         path: '/account/role',
         component: './account/role',
+      },
+    ],
+  },
+  {
+    path: '/form-manage',
+    name: 'form-manage',
+    icon: 'BarsOutlined',
+    routes: [
+      {
+        name: 'template',
+        path: '/form-manage/form-template',
+        component: './formManage/formTemplate',
       },
     ],
   },
